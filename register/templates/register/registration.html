@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create an Account{% endblock %}
+
+
+{% block content %}
+    <form method="post" class="form-group">
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+{% endblock %}
