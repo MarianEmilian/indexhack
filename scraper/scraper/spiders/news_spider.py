@@ -3,12 +3,6 @@ import re
 from ..items import ArticleItem, Company
 
 
-def get_company(headline, companies):
-    for company in companies:
-        if re.search(r'{}'.format(company), headline.lower()):
-            return company
-
-
 class NewsSpider(scrapy.Spider):
     name = "news"
     companies = Company.objects.all()
@@ -36,7 +30,6 @@ class NewsSpider(scrapy.Spider):
         headline = response.xpath(HEADLINE_SELECTOR).get()
         date = response.xpath(DATE_SELECTOR).get()
 
-        name = get_company(headline, self.companies)
 
         blog_id = response.xpath("/html/head/meta[@property ='article:id']/@content")[0].extract()
         url = 'https://www.forbes.com/tamagotchi/v1/fetchLifetimeViews/?id=' + blog_id
