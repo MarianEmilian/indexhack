@@ -12,4 +12,4 @@ class ScraperPipeline:
     def process_item(self, item, spider):
         if not Article.objects.filter(blog_id = item['blog_id']).exists():
             item.save()
-            print('here')
+        return item
