@@ -1,11 +1,19 @@
 {% extends "main/base.html" %}
-
+{% load crispy_forms_tags %}
 
 {% block content%}
     <h1>{{ name }}'s Companies</h1>
     <ul>
-        {% for company in companies %}
-            <li>{{ company }}</li>
+        {% for company in selected_companies %}
+            <li>
+            <a href="remove/{{company}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a>
+            {{ company }}
+            <br></br>
+            </li>
         {% endfor %}
+    <form method="post" class="form-group">
+        {{ form }}
+        <button type="submit" value = "Select" class="btn btn-success">Add company</button>
+    </form>
     </ul>
 {% endblock %}
