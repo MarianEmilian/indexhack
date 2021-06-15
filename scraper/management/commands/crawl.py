@@ -10,21 +10,24 @@ import sys
 import datetime as dt
 
 
-os.chdir("scraper")
+
 
 
 def crawl_job():
+
+    print(os.system("cd"))
     settings = get_project_settings()
     process = CrawlerProcess(settings=settings)
-    
+    os.chdir("scraper")
     os.system("scrapy crawl news")
-    return  process.crawl(news_spider.NewsSpider)
+    os.chdir("..")
+    return process.crawl(NewsSpider)
 
 
 def next_crawl(null, hour, min):
     tomorrow = (
         dt.datetime.now() + dt.timedelta(days=1)
-        ).replace(hour=hour, minute=minute, second=0, microsecond=0)
+        ).replace(hour=hour, minute=min, second=0, microsecond=0)
 
     sleep = (tomorrow - dt.datetime.now()).total_seconds()
 

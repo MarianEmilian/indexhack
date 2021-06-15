@@ -16,9 +16,9 @@ class NewsSpider(scrapy.Spider):
 
     def parse(self, response, company):
         for article in response.css('.stream-item__title::attr(href)').getall():
-            yield response.follow(article, callback=self.parse_article, cb_kwargs={'company': company})
+            yield response.follow(article, callback=self.parse_article, cb_kwargs={'company': company, 'article_url':article})
 
-    def parse_article(self, response, company):
+    def parse_article(self, response, company, article_url):
 
         PARAGRAPH_SELECTOR = '//*[@id="article-stream-0"]/div[2]/div[2]/div[3]/div[1]/p//text()'
         HEADLINE_SELECTOR = '//*[@id="article-stream-0"]/div[2]/div[2]/div[1]/div/h1/text()'
@@ -39,6 +39,7 @@ class NewsSpider(scrapy.Spider):
         article['company'] = company
         article['blog_id'] = blog_id
         article['paragraphs'] = paragraphs
+        article['url'] = article_url
         yield response.follow(url, callback=self.parse_clicks, cb_kwargs={'article': article})
 
     def parse_clicks(self, response, article):

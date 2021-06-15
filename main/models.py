@@ -20,7 +20,8 @@ class Article(models.Model):
     blog_id = models.CharField(max_length=300)
     paragraphs = models.TextField(blank=True, null=True)
     clicks = models.IntegerField()
-
+    url = models.URLField(default=None)
+    sentiment = models.CharField(max_length=12, null=True, blank=True)
     def __str__(self):
         return self.headline
 

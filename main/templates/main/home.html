@@ -1,5 +1,19 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h1>Home Page</h1>
+<h1>Articles with the corespondent sentiment</h1>
+
+    <table class="table table-striped">
+        <tr>
+            <th scope="col">Article headline</th>
+            <th scope="col">Sentiment</th>
+        </tr>
+        {% for headline, sentiment, url in articles %}
+            <tr>
+            <th scope="row"><a href="{{url}}" >{{headline}}</a></th>
+            <td>{{ sentiment }}</td> 
+            </tr>
+        {% endfor %}
+    <table>
+
 {% endblock %}

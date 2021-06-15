@@ -2,31 +2,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Company, User, Preference, Article
 from .forms import PreferenceCreationForm
-from .utils import get_mood
-import requests
-from datetime import datetime, timedelta
+from .utils import get_mood, get_price, get_sentiment
 
 
 
 
-# Create your views here.
-def get_price(company_name):
 
-    time_threshold = datetime.now() - timedelta(hours=1)
-    company = Company.objects.filter(updated_at__lt=time_threshold, name=company_name)[0]
-    if company:
-        return company.price
-    else:
-        url = 'https://www.forbes.com/search/?q=' + company
-        response = requests.get(url)
-        if response.status_code == 200:
-            length = len("<div class=\"entity-stats__price\">")
-            start_div = response.text.find("<div class=\"entity-stats__price\"") + length
-            end_div = response.text[start_div:].find("</div>")
-            price_div = response.text[start_div: start_div + end_div]
-            company.update(price = price_div)
-            return price_div
-    
+
+# Create your views here. 
 def index(response):
     return render(response, "main/base.html", {})
 
@@ -36,10 +19,22 @@ def home(response):
         my_dict = {
                 'articles': None,
             }
+        headlines= []
+        sentiments = []
+        urls = []
         articles = Article.objects.all()
         
+        for article in articles:
+            if not article.sentiment:
+                sentiment = get_sentiment(article.paragraphs)
+                article.sentiment = sentiment
+                article.save()
 
-    return render(response, "main/home.html", {})
+            headlines.append(article.headline)
+            sentiments.append(article.sentiment)
+            urls.append(article.url)
+        my_dict['articles'] = zip(headlines, sentiments, urls)
+    return render(response, "main/home.html", my_dict)
 
 
 def profile(response):
