@@ -3,17 +3,27 @@
 
 {% block content%}
     <h1>{{ name }}'s Companies</h1>
-    <ul>
-        {% for company in selected_companies %}
-            <li>
-            <a href="remove/{{company}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a>
-            {{ company }}
-            <br></br>
-            </li>
+    <table class="table table-striped">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Company</th>
+            <th scope="col">Trend</th>
+            <th scope="col">Predicted Price</th>
+            <th scope="col">Actual Price</th>
+        </tr>
+        {% for company, mood, actual_price in selected_companies %}
+            <tr>
+            <th scope="row"><a href="remove/{{company}}"><button type="submit" class="btn btn-danger btn-sm">Remove</button></a></th>
+
+            <td>{{ company }}</td> 
+            <td> {{ mood }} </td>
+            <td> {{ 0.0 }} </td>
+            <td> {{ actual_price }} </td>
+            </tr>
         {% endfor %}
+    <table>
     <form method="post" class="form-group">
         {{ form }}
         <button type="submit" value = "Select" class="btn btn-success">Add company</button>
     </form>
-    </ul>
 {% endblock %}
