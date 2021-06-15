@@ -14,6 +14,24 @@ def index(response):
     return render(response, "main/base.html", {})
 
 
+def view_sorted_sentiment(response, sentiment):
+    if response.method == "GET":
+        my_dict = {
+                'articles': None,
+            }
+        headlines= []
+        sentiments = []
+        urls = []
+        articles = Article.objects.all().filter(sentiment = sentiment)
+        
+        for article in articles:
+            headlines.append(article.headline)
+            sentiments.append(article.sentiment)
+            urls.append(article.url)
+        my_dict['articles'] = zip(headlines, sentiments, urls)
+    return render(response, "main/home.html", my_dict)
+
+
 def home(response):
     if response.method == "GET":
         my_dict = {
