@@ -86,7 +86,7 @@ def profile(response):
             my_dict['selected_companies'] =zip(companies, mood_p_company, price_list) 
             return render(response, "main/profile.html", my_dict)
         else:
-            response = redirect('/login')
+            response = redirect('/accounts/login')
             return response
     elif response.method == "POST":
         user = User.objects.get(id=response.user.id)

@@ -22,7 +22,6 @@ def get_mood(company):
 
 
 def get_price(company_name):
-
     time_threshold = datetime.now() - timedelta(hours=1)
     company = Company.objects.filter(updated_at__lt=time_threshold, name=company_name)
     print(company)

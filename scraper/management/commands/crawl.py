@@ -14,7 +14,6 @@ import datetime as dt
 
 
 def crawl_job():
-
     print(os.system("cd"))
     settings = get_project_settings()
     process = CrawlerProcess(settings=settings)

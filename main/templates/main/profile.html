@@ -8,8 +8,7 @@
             <th scope="col"></th>
             <th scope="col">Company</th>
             <th scope="col">Trend</th>
-            <th scope="col">Predicted Price</th>
-            <th scope="col">Actual Price</th>
+            <th scope="col">Current Price</th>
         </tr>
         {% for company, mood, actual_price in selected_companies %}
             <tr>
@@ -17,7 +16,6 @@
 
             <td>{{ company }}</td> 
             <td> {{ mood }} </td>
-            <td> {{ 0.0 }} </td>
             <td> {{ actual_price }} </td>
             </tr>
         {% endfor %}
